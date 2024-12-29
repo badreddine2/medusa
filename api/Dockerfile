@@ -47,8 +47,9 @@ RUN python3.9 -m venv /Medusa/venv && \
     /Medusa/venv/bin/pip install poetry && \
     /Medusa/venv/bin/poetry install
 
+
 # Install FastAPI, Uvicorn, and python-multipart
-RUN /Medusa/venv/bin/pip install fastapi uvicorn python-multipart
+RUN /Medusa/venv/bin/pip install fastapi uvicorn python-multipart pyyaml
 
 # Download and tidy Go modules
 RUN go mod tidy
@@ -60,4 +61,4 @@ RUN go build -o medusa .
 EXPOSE 8080 8000
 
 # Set entrypoint to run Uvicorn with FastAPI app
-ENTRYPOINT ["/Medusa/venv/bin/uvicorn", "api.import:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+ENTRYPOINT ["/Medusa/venv/bin/uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
