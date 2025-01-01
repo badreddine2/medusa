@@ -14,7 +14,11 @@
 3. [Dynamic endpoints with environments variables](#dynamic-endpoints-with-environment-variables)
    - [1. `/env`](#env)
    - [2. `Endpoints`](#endpoints)
-
+4. [Docker Setup for Running Medusa and FastAPI Container](#docker-setup-for-running-medusa-and-fastapi-container)
+   - [1. Prerequisites](#1-prerequisites)
+   - [2. Build Medusa image](#2-build-the-image)
+   - [3. Run Medusa container](#3-run-the-medusa-container)
+   - [4. Medusa Swagger UI ](#4accessing-the-swagger-ui)
 ### Description
 This contribution aims to extend the functionality of Medusa by implementing a microservice using FastAPI.
 
