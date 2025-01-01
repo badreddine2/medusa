@@ -382,3 +382,32 @@ Once the `/env` endpoint is executed, you can seamlessly use the advanced endpoi
 - **Delete**
 ![alt text](./images/adv_delete.png)
 These advanced endpoints are built on top of the standard ones but are more dynamic, removing the need to repeatedly input parameters manually.
+
+## Docker Setup for Running Medusa and FastAPI Container
+
+To run the container that includes both Medusa and FastAPI, follow these steps:
+
+**Note**: The Medusa client is already built into the container, so you can directly use the CLI through the container's terminal.
+
+### 1. Prerequisites:
+Make sure you have Docker installed on your machine.
+
+### 2. Build the Image
+To build the Medusa container image, use the following command:
+
+```bash
+1- cd medusa/api
+2- docker build -t medusa-api -f Dockerfile ../
+```
+### 3. Run the Medusa Container
+To run the container, use the following command:
+```bash
+docker run -d -p 8000:8000 -p 8080:8080 --name medusa-app --network vault medusa-api
+```
+The Dockerfile ensures that Python, Go, and all the necessary dependencies are installed. It also builds the Medusa application and sets FastAPI as the entry point to make the application ready for use.
+
+### 4.Accessing the Swagger UI
+Once the container is running, you can access the Swagger UI for executing the endpoints at:
+```bash
+http://localhost:8000/docs
+```
