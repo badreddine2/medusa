@@ -8,7 +8,7 @@ import (
 	"github.com/jonasvinther/medusa/pkg/vaultengine"
 	"github.com/jonasvinther/medusa/pkg/importer"
 	"github.com/manifoldco/promptui"
-	//"github.com/jonasvinther/medusa/pkg/encrypt"
+
 )
 
 func init() {
@@ -35,72 +35,65 @@ var moveCmd = &cobra.Command{
 		engineType, _ := cmd.Flags().GetString("engine-type")
 		isApproved, _ := cmd.Flags().GetBool("auto-approve")
 
-		// Créer un client Vault
-		client := vaultengine.NewClient(vaultAddr, vaultToken, insecure, namespace, vaultRole, kubernetes, authPath)
 
-		// Splitting the path and determining engine type
+		client := vaultengine.NewClient(vaultAddr, vaultToken, insecure, namespace, vaultRole, kubernetes, authPath)
 		engine, sourcePath, err := client.MountpathSplitPrefix(sourcePath)
+
 		if err != nil {
-			fmt.Println("Erreur lors du split du chemin source:", err)
+			fmt.Println("error splitting source path:", err)
 			return err
 		}
 		client.UseEngine(engine)
 		client.SetEngineType(engineType)
 
-		// Exporter le secret du chemin source
+
 		exportData, err := client.FolderExport(sourcePath)
 		if err != nil {
-			fmt.Println("Erreur lors de l'export:", err)
+			fmt.Println("error exporting data:", err)
 			return err
 		}
 
-		// Si les données sont vides, lève une exception
+
 		if len(exportData) == 0 {
-			return fmt.Errorf("Aucune donnée trouvée dans le chemin source %s", sourcePath)
+			return fmt.Errorf("no data found in source path %s", sourcePath)
 		}
 
-		// Exporter les données dans un fichier temporaire (format YAML)
+
 		tempFileName := "/tmp/exported_secret.yaml"
 		data, err := vaultengine.ConvertToYaml(exportData)
 		if err != nil {
-			fmt.Println("Erreur lors de la conversion en YAML:", err)
+			fmt.Println("error converting data to YAML:", err)
 			return err
 		}
 
 		err = ioutil.WriteFile(tempFileName, data, 0644)
 		if err != nil {
-			fmt.Println("Erreur lors de l'écriture du fichier:", err)
+			fmt.Println("error writing temporary file:", err)
 			return err
 		}
 
-		// Appel de la fonction extractYamlData pour modifier le fichier YAML
-		// Passer le chemin du fichier exporté et le chemin à extraire (par exemple, sourcePath)
 		sourcePath_edited := strings.TrimSuffix(sourcePath, "/")
-		fmt.Println(sourcePath_edited)
 		err = extractYamlData(tempFileName, sourcePath_edited)
 		if err != nil {
-			fmt.Println("Erreur lors de l'extraction des données YAML:", err)
+			fmt.Println("error editing YAML data:", err)
 			return err
 		}
 
-		// Lire le fichier modifié
+
 		fileData, err := ioutil.ReadFile(tempFileName)
 		if err != nil {
-			fmt.Println("Erreur lors de la lecture du fichier exporté:", err)
+			fmt.Println("error reading modified file:", err)
 			return err
 		}
 
-		// Importer les données modifiées
 		parsedYaml, err := importer.Import(fileData)
 		if err != nil {
-			fmt.Println("Erreur lors de l'importation des données YAML:", err)
+			fmt.Println("error parsing YAML data:", err)
 			return err
 		}
 
-		// Écrire les données dans le chemin cible dans Vault
 		for subPath, value := range parsedYaml {
-			fullPath := targetPath + subPath
-			fmt.Println(fullPath)			
+			fullPath := targetPath + subPath		
 			client.SecretWrite(fullPath, value)
 		}
 
@@ -109,12 +102,11 @@ var moveCmd = &cobra.Command{
 			return err
 		}
 
-		// Print a list of all the secrets that will be deleted
+
 		for _, key := range secretPaths {
 			fmt.Printf("Deleting secret [%s%s]\n", engine, key)
 		}
 
-		// Prompt for confirmation
 		if !isApproved {
 			prompt := promptui.Prompt{
 				Label:     fmt.Sprintf("Do you want to delete the %d secrets listed above? Only 'y' will be accepted to approve.", len(secretPaths)),
@@ -131,8 +123,6 @@ var moveCmd = &cobra.Command{
 				isApproved = true
 			}
 		}
-
-		// Perform deletion of the secrets
 		if isApproved {
 			for _, key := range secretPaths {
 				client.SecretDelete(key)
@@ -141,7 +131,7 @@ var moveCmd = &cobra.Command{
 		}
 
 		return nil
-		fmt.Printf("Le secret du chemin %s a été copié avec succès vers %s\n", sourcePath, targetPath)
+		fmt.Printf("Secrets moved from %s to %s successfully.\n", sourcePath, targetPath)
 		return nil
 	},
 }
