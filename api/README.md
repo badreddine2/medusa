@@ -72,7 +72,7 @@ curl -X 'POST' \
 ```
 ### Swagger
 ![Alt text](./images/tok1.png)
-#### Result :
+### Result :
 ![Alt text](./images/token_get.png)
 
 ## 2. `/get_paths`
@@ -101,7 +101,7 @@ The goal of this endpoint is to provide the user with all available secret paths
 
 ### Swagger
 ![Alt text](./images/get_path.png)
-#### Result :
+### Result :
 ![Alt text](./images/get_path_result.png)
 
 ### Error Handling 
@@ -146,7 +146,7 @@ curl -X 'POST' \
 ```
 ### Swagger
 ![Alt text](./images/import.png)
-#### Result :
+### Result :
 ![Alt text](./images/import_succes.png)
 
 ### Error Handling 
@@ -190,7 +190,7 @@ curl -X 'POST' \
 ```
 ### Swagger
 ![Alt text](./images/export.png)
-#### Result :
+### Result :
 ![Alt text](./images/export_result.png)
 
 ### Error Handling 
@@ -232,7 +232,7 @@ curl -X 'POST' \
 ```
 ### Swagger
 ![alt text](./images/copy.png)
-#### Result :
+### Result :
 ![alt text](./images/copy_result.png)
 
 ## 6. `/move`
@@ -271,7 +271,7 @@ curl -X 'POST' \
 ```
 ### Swagger
 ![alt text](./images/move.png)
-#### Result :
+### Result :
 ![alt text](./images/move_result.png)
 ![alt text](./images/move_vault_result.png)
 
@@ -314,7 +314,7 @@ curl -X 'POST' \
 ```
 ### Swagger
 ![alt text](./images/old_new.png)
-#### Result :
+### Result :
 ![alt text](./images/old_new_result.png)
 
 ![alt text](./images/old_new_vault.png)
@@ -352,7 +352,7 @@ curl -X 'DELETE' \
 ```
 ### Swagger
 ![alt text](./images/delete.png)
-#### Result :
+### Result :
 ![alt text](./images/delete_result.png)
 
 # Dynamic Endpoints with Environment Variables
@@ -372,15 +372,15 @@ The `/env` endpoint takes the following parameters:
 ## Endpoints
 Once the `/env` endpoint is executed, you can seamlessly use the advanced endpoints for all Medusa operations, such as:
 - **Export**
-![alt text](./images/adv_export.png)
+### ![alt text](./images/adv_export.png)
 - **Import**
-![alt text](./images/adv_import.png)
+### ![alt text](./images/adv_import.png)
 - **Copy**
-![alt text](./images/adv_copy.png)
+### ![alt text](./images/adv_copy.png)
 - **Move**
-![alt text](./images/adv_move.png)
+### ![alt text](./images/adv_move.png)
 - **Delete**
-![alt text](./images/adv_delete.png)
+### ![alt text](./images/adv_delete.png)
 These advanced endpoints are built on top of the standard ones but are more dynamic, removing the need to repeatedly input parameters manually.
 
 ## Docker Setup for Running Medusa and FastAPI Container
