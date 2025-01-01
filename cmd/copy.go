@@ -13,7 +13,7 @@ import (
 
 func init() {
 	rootCmd.AddCommand(copyCmd)
-	moveCmd.PersistentFlags().StringP("engine-type", "m", "kv2", "Specify the secret engine type [kv1|kv2]")
+	copyCmd.PersistentFlags().StringP("engine-type", "m", "kv2", "Specify the secret engine type [kv1|kv2]")
 }
 
 var copyCmd = &cobra.Command{

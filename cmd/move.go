@@ -14,7 +14,7 @@ import (
 func init() {
 	rootCmd.AddCommand(moveCmd)
 	moveCmd.PersistentFlags().BoolP("auto-approve", "y", false, "Skip interactive approval of plan before deletion")
-	//moveCmd.PersistentFlags().StringP("engine-type", "m", "kv2", "Specify the secret engine type [kv1|kv2]")
+	moveCmd.PersistentFlags().StringP("engine-type", "m", "kv2", "Specify the secret engine type [kv1|kv2]")
 }
 
 var moveCmd = &cobra.Command{
