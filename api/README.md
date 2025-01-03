@@ -1,4 +1,4 @@
-# Documentation of FastApi Medusa
+# Documentation of FastApi Medusa CLI
 
 ## Table of Contents
 1. [Description](#description)
